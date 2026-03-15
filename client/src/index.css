@@ -1,0 +1,633 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────── Base Layer ───────────────────── */
+@layer base {
+  /* Selective transitions — avoid applying to everything to prevent jank */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface-50 text-surface-800 antialiased font-sans;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-primary-200 text-primary-900;
+  }
+
+  /* ── Custom Scrollbar ── */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-300 rounded-full;
+    transition: background 0.2s;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-300;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+/* ───────────────────── Component Layer ───────────────────── */
+@layer components {
+
+  /* ════════════════════════════════
+     BUTTONS
+  ════════════════════════════════ */
+
+  .btn-base {
+    @apply
+      inline-flex items-center justify-center gap-2
+      font-semibold text-sm leading-none
+      px-5 py-[11px] rounded-xl
+      select-none cursor-pointer
+      transition-all duration-200 ease-out
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+      disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+      active:scale-[0.97];
+  }
+
+  .btn-primary {
+    @apply btn-base
+      bg-gradient-to-b from-primary-500 to-primary-600
+      text-white
+      shadow-btn
+      hover:from-primary-400 hover:to-primary-500 hover:shadow-btn-hover
+      focus-visible:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn-base
+      bg-white text-surface-700
+      border border-surface-200
+      shadow-sm
+      hover:bg-surface-50 hover:border-primary-300 hover:text-primary-700 hover:shadow
+      focus-visible:ring-primary-400;
+  }
+
+  .btn-danger {
+    @apply btn-base
+      bg-gradient-to-b from-red-500 to-red-600
+      text-white
+      shadow-md
+      hover:from-red-400 hover:to-red-500 hover:shadow-lg
+      focus-visible:ring-red-500;
+  }
+
+  .btn-success {
+    @apply btn-base
+      bg-gradient-to-b from-emerald-500 to-emerald-600
+      text-white
+      shadow-md
+      hover:from-emerald-400 hover:to-emerald-500 hover:shadow-lg
+      focus-visible:ring-emerald-500;
+  }
+
+  .btn-ghost {
+    @apply btn-base
+      bg-transparent text-surface-600
+      hover:bg-surface-100 hover:text-surface-800
+      focus-visible:ring-surface-300;
+  }
+
+  .btn-accent {
+    @apply btn-base
+      bg-gradient-to-b from-accent-400 to-accent-500
+      text-surface-900
+      shadow-md
+      hover:from-accent-300 hover:to-accent-400 hover:shadow-lg
+      focus-visible:ring-accent-400;
+  }
+
+  .btn-sm {
+    @apply px-3 py-[7px] text-xs rounded-lg;
+  }
+
+  .btn-lg {
+    @apply px-7 py-3.5 text-base rounded-2xl;
+  }
+
+  .btn-icon {
+    @apply btn-base p-2.5 rounded-xl;
+  }
+
+
+  /* ════════════════════════════════
+     INPUTS
+  ════════════════════════════════ */
+
+  .input-field {
+    @apply
+      w-full px-4 py-[10px]
+      bg-white text-surface-800 text-sm
+      border border-surface-200 rounded-xl
+      shadow-inner
+      placeholder:text-surface-400
+      hover:border-surface-300
+      focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400
+      disabled:bg-surface-100 disabled:text-surface-400 disabled:cursor-not-allowed
+      transition-all duration-200;
+  }
+
+  .input-field-error {
+    @apply input-field border-error focus:border-error focus:ring-error/20;
+  }
+
+  .textarea-field {
+    @apply input-field resize-none leading-relaxed;
+  }
+
+  .select-field {
+    @apply input-field appearance-none cursor-pointer;
+  }
+
+
+  /* ════════════════════════════════
+     CARDS
+  ════════════════════════════════ */
+
+  .card {
+    @apply
+      bg-white rounded-2xl
+      border border-surface-100
+      shadow-card
+      p-6
+      transition-all duration-300 ease-out;
+  }
+
+  .card-hover {
+    @apply card hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  .card-interactive {
+    @apply card-hover cursor-pointer active:scale-[0.99] active:translate-y-0;
+  }
+
+  .card-flat {
+    @apply bg-white rounded-2xl border border-surface-100 p-6;
+  }
+
+  /* Glass card */
+  .card-glass {
+    @apply
+      rounded-2xl border border-white/30
+      bg-white/70 backdrop-blur-md
+      shadow-card p-6
+      transition-all duration-300;
+  }
+
+  /* Gradient accent card */
+  .card-accent {
+    @apply
+      rounded-2xl p-6 border border-primary-100
+      bg-gradient-to-br from-primary-50 to-surface-50
+      shadow-card;
+  }
+
+
+  /* ════════════════════════════════
+     TYPOGRAPHY HELPERS
+  ════════════════════════════════ */
+
+  .page-title {
+    @apply font-display text-h1 text-surface-900 tracking-tight;
+  }
+
+  .section-title {
+    @apply font-display text-h3 text-surface-800;
+  }
+
+  .label {
+    @apply block text-label text-surface-600 mb-1.5 tracking-wide uppercase;
+  }
+
+  .helper-text {
+    @apply text-caption text-surface-400 mt-1;
+  }
+
+  .error-text {
+    @apply text-caption text-error mt-1 font-medium;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400;
+  }
+
+  .gradient-text-warm {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-500;
+  }
+
+
+  /* ════════════════════════════════
+     BADGES
+  ════════════════════════════════ */
+
+  .badge {
+    @apply
+      inline-flex items-center gap-1
+      px-2.5 py-0.5 rounded-full
+      text-overline font-bold tracking-wide;
+  }
+
+  .badge-sm {
+    @apply px-2 py-px text-[10px] font-bold tracking-widest;
+  }
+
+  .badge-dot {
+    @apply w-1.5 h-1.5 rounded-full flex-shrink-0;
+  }
+
+
+  /* ════════════════════════════════
+     TABS
+  ════════════════════════════════ */
+
+  .tab-btn {
+    @apply
+      px-4 py-2 rounded-xl text-sm font-semibold
+      transition-all duration-200 ease-out;
+  }
+
+  .tab-btn-active {
+    @apply tab-btn
+      bg-primary-600 text-white shadow-btn;
+  }
+
+  .tab-btn-inactive {
+    @apply tab-btn
+      bg-surface-100 text-surface-500
+      hover:bg-primary-50 hover:text-primary-700;
+  }
+
+  /* Underline variant */
+  .tab-underline {
+    @apply px-1 py-2.5 text-sm font-semibold border-b-2 transition-all duration-200;
+  }
+
+  .tab-underline-active {
+    @apply tab-underline border-primary-600 text-primary-700;
+  }
+
+  .tab-underline-inactive {
+    @apply tab-underline border-transparent text-surface-500 hover:text-surface-700 hover:border-surface-300;
+  }
+
+
+  /* ════════════════════════════════
+     TABLE
+  ════════════════════════════════ */
+
+  .table-wrapper {
+    @apply w-full overflow-x-auto rounded-2xl border border-surface-100 shadow-card;
+  }
+
+  .table-header {
+    @apply text-left py-3.5 px-4 text-overline text-surface-400 bg-surface-50;
+  }
+
+  .table-cell {
+    @apply py-3.5 px-4 text-body-sm text-surface-700;
+  }
+
+  .table-row {
+    @apply border-b border-surface-100 last:border-0
+      hover:bg-primary-50/40 transition-colors duration-150;
+  }
+
+
+  /* ════════════════════════════════
+     DIVIDERS
+  ════════════════════════════════ */
+
+  .divider {
+    @apply w-full h-px bg-surface-100 my-4;
+  }
+
+  .divider-strong {
+    @apply w-full h-px bg-surface-200 my-6;
+  }
+
+
+  /* ════════════════════════════════
+     GLASS / FROSTED
+  ════════════════════════════════ */
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-lg;
+  }
+
+  .glass-dark {
+    @apply bg-surface-900/70 backdrop-blur-lg border border-white/10 shadow-2xl;
+  }
+
+
+  /* ════════════════════════════════
+     SKELETON LOADERS
+  ════════════════════════════════ */
+
+  .skeleton {
+    @apply relative overflow-hidden bg-surface-100 rounded-lg;
+  }
+
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,255,255,0.55) 50%,
+      transparent 100%
+    );
+    background-size: 400px 100%;
+    animation: shimmer 1.8s linear infinite;
+  }
+
+  .skeleton-text {
+    @apply skeleton h-4 rounded-md;
+  }
+
+  .skeleton-text-sm {
+    @apply skeleton h-3 rounded-md;
+  }
+
+  .skeleton-title {
+    @apply skeleton h-6 rounded-lg;
+  }
+
+  .skeleton-avatar {
+    @apply skeleton rounded-full;
+  }
+
+  .skeleton-btn {
+    @apply skeleton h-10 rounded-xl;
+  }
+
+  .skeleton-card {
+    @apply skeleton rounded-2xl;
+  }
+
+
+  /* ════════════════════════════════
+     STAT / METRIC CARDS
+  ════════════════════════════════ */
+
+  .stat-card {
+    @apply card flex items-start gap-4;
+  }
+
+  .stat-icon-wrap {
+    @apply flex-shrink-0 w-12 h-12 rounded-xl
+      flex items-center justify-center
+      bg-primary-50 text-primary-600;
+  }
+
+  .stat-value {
+    @apply font-display text-h2 text-surface-900 leading-none;
+  }
+
+  .stat-label {
+    @apply text-body-sm text-surface-500 mt-0.5;
+  }
+
+
+  /* ════════════════════════════════
+     FORM GROUPS
+  ════════════════════════════════ */
+
+  .form-group {
+    @apply space-y-1.5;
+  }
+
+  .form-section {
+    @apply space-y-5;
+  }
+
+  .form-row {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+  }
+
+
+  /* ════════════════════════════════
+     ALERTS / BANNERS
+  ════════════════════════════════ */
+
+  .alert {
+    @apply flex items-start gap-3 p-4 rounded-xl text-body-sm font-medium;
+  }
+
+  .alert-info {
+    @apply alert bg-info/10 text-info border border-info/20;
+  }
+
+  .alert-success {
+    @apply alert bg-success/10 text-success-dark border border-success/20;
+  }
+
+  .alert-warning {
+    @apply alert bg-warning/10 text-warning-dark border border-warning/20;
+  }
+
+  .alert-error {
+    @apply alert bg-error/10 text-error-dark border border-error/20;
+  }
+
+
+  /* ════════════════════════════════
+     EMPTY STATE
+  ════════════════════════════════ */
+
+  .empty-state {
+    @apply flex flex-col items-center justify-center gap-3
+      py-16 px-6 text-center;
+  }
+
+  .empty-state-icon {
+    @apply w-16 h-16 rounded-2xl bg-surface-100
+      flex items-center justify-center
+      text-surface-400 mb-2;
+  }
+
+
+  /* ════════════════════════════════
+     PAGE LAYOUT HELPERS
+  ════════════════════════════════ */
+
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+
+  .page-header {
+    @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8;
+  }
+
+
+  /* ════════════════════════════════
+     AVATAR
+  ════════════════════════════════ */
+
+  .avatar {
+    @apply rounded-full flex items-center justify-center
+      font-display font-bold select-none flex-shrink-0;
+  }
+
+  .avatar-sm {
+    @apply avatar w-8 h-8 text-xs;
+  }
+
+  .avatar-md {
+    @apply avatar w-10 h-10 text-sm;
+  }
+
+  .avatar-lg {
+    @apply avatar w-14 h-14 text-xl;
+  }
+
+
+  /* ════════════════════════════════
+     STEP / WIZARD
+  ════════════════════════════════ */
+
+  .step-dot {
+    @apply w-8 h-8 rounded-full flex items-center justify-center
+      text-xs font-bold transition-all duration-300;
+  }
+
+  .step-dot-active {
+    @apply step-dot bg-primary-600 text-white shadow-btn;
+  }
+
+  .step-dot-done {
+    @apply step-dot bg-success text-white;
+  }
+
+  .step-dot-idle {
+    @apply step-dot bg-surface-100 text-surface-400;
+  }
+}
+
+/* ───────────────────── Utility Layer ───────────────────── */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Gradient mesh background */
+  .mesh-bg {
+    background-color: theme('colors.surface.50');
+    background-image:
+      radial-gradient(ellipse 80% 60% at 20% -10%, theme('colors.primary.100') 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 110%, theme('colors.accent.100') 0%, transparent 60%);
+  }
+
+  /* Shimmer is defined in tailwind keyframes, but referenced here for base skeleton */
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position:  400px 0; }
+  }
+
+  /* Focus ring helper */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40 focus-visible:ring-offset-2;
+  }
+
+  /* Smooth hover lift */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-0.5;
+  }
+
+  /* Truncate multiline */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  /* Scroll snap */
+  .snap-x-mandatory {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .snap-start {
+    scroll-snap-align: start;
+  }
+}
+
+/* ───────────────────── Third-party Overrides ───────────────────── */
+
+/* ── react-datepicker ── */
+.react-datepicker-wrapper {
+  @apply w-full;
+}
+.react-datepicker__input-container input {
+  @apply input-field;
+}
+.react-datepicker {
+  @apply font-sans border-surface-200 rounded-2xl shadow-lg !important;
+}
+.react-datepicker__header {
+  @apply bg-surface-50 border-b border-surface-100 rounded-t-2xl !important;
+}
+.react-datepicker__current-month,
+.react-datepicker-time__header {
+  @apply text-surface-800 font-bold text-sm !important;
+}
+.react-datepicker__navigation-icon::before {
+  @apply border-surface-400 !important;
+}
+.react-datepicker__day-name {
+  @apply text-surface-400 text-xs font-semibold !important;
+}
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  @apply bg-primary-600 text-white rounded-lg !important;
+}
+.react-datepicker__day:hover {
+  @apply bg-primary-50 text-primary-700 rounded-lg !important;
+}
+.react-datepicker__day--today {
+  @apply font-bold text-primary-600 !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+  @apply bg-primary-600 !important;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+  @apply bg-primary-50 !important;
+}
+
+/* ── react-hot-toast ── */
+.go3958317564 {
+  @apply font-sans text-body-sm !important;
+}
